@@ -3,9 +3,18 @@ import Button from "../Button";
 import style from './Form.module.scss';
 
 class Form extends React.Component {
+    state = {
+        tarefa: '',
+        tempo: '00:00:00'
+    }
+
+    adicionarTarefa(evento: React.FormEvent<HTMLFormElement>){
+        evento.preventDefault();
+        console.log('State: ', this.state)
+    }
     render () {
         return (
-            <form className={style.novaTarefa}>
+            <form className={style.novaTarefa} onSubmit={this.adicionarTarefa.bind(this)}>
                 <div className={style.inputContainer}>
                     <label htmlFor="tarefa">
                         Adicione um novo estudo
@@ -13,6 +22,8 @@ class Form extends React.Component {
                     <input
                         type="text"
                         name="tarefa"
+                        value={this.state.tarefa}
+                        onChange={evento => this.setState({ ...this.state, tarefa: evento.target.value })}
                         id="tarefa"
                         placeholder="O que você deseja estudar"
                         required
@@ -27,6 +38,8 @@ class Form extends React.Component {
                         type="time"
                         step="1"
                         name="tempo"
+                        value={this.state.tempo}
+                        onChange={evento => this.setState({ ...this.state, tempo: evento.target.value })}
                         id="tempo"
                         min="00:00:00"
                         max="01:30:00"
@@ -34,8 +47,8 @@ class Form extends React.Component {
                     >
                     </input>
                 </div>
-                <Button>
-                    Banana    
+                <Button type="submit">
+                    Adicionar    
                 </Button>
             </form>
         )
